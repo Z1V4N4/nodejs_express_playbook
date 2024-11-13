@@ -14,6 +14,7 @@ module.exports = {
         statusCode: 500,
         status: false,
         message: "Internal server error",
+        error: error.message,
       };
     }
   },
@@ -49,6 +50,7 @@ module.exports = {
         statusCode: 500,
         status: false,
         message: "Internal server error",
+        error: error.message,
       };
     }
   },
@@ -82,6 +84,7 @@ module.exports = {
         statusCode: 500,
         status: false,
         message: "Internal server error",
+        error: error.message,
       };
     }
   },

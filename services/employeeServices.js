@@ -14,6 +14,66 @@ module.exports = {
         statusCode: 500,
         status: false,
         message: "Internal server error",
+        error: error.message,
+      };
+    }
+  },
+
+  getEmployeesDetail: async (req) => {
+    const { nik } = req.body;
+
+    if (nik == undefined || nik == "") {
+      return {
+        statusCode: 404,
+        status: false,
+        message: "Pastikan Parameter Yang Digunakan",
+      };
+    }
+
+    try {
+      const employees = await postgres.employee.findAll({
+        include: [
+          { model: postgres.team, attributes: ["team_desc"] },
+          {
+            model: postgres.position,
+            attributes: ["position_desc"],
+          },
+        ],
+        where: { nik: nik },
+      });
+
+      const map = employees.map((data) => ({
+        nik: data.nik,
+        nama_karyawan: data.nama_karyawan,
+        insert_date: data.insert_date,
+        update_date: data.update_date,
+        position_code: data.position_code,
+        position_desc: data.p?.position_desc || null,
+        team_code: data.team_code,
+        team_desc: data.t?.team_desc || null,
+        isactive: data.isactive,
+      }));
+
+      if (!employees.length) {
+        return {
+          statusCode: 200,
+          status: false,
+          message: "Data Karyawan Tidak Ditemukan",
+        };
+      }
+
+      return {
+        statusCode: 200,
+        status: true,
+        employees: map,
+      };
+    } catch (error) {
+      console.error(error);
+      return {
+        statusCode: 500,
+        status: false,
+        message: "Internal server error",
+        error: error.message,
       };
     }
   },
@@ -51,6 +111,7 @@ module.exports = {
         statusCode: 500,
         status: false,
         message: "Internal server error",
+        error: error.message,
       };
     }
   },
@@ -87,6 +148,7 @@ module.exports = {
         statusCode: 500,
         status: false,
         message: "Internal server error",
+        error: error.message,
       };
     }
   },
