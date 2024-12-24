@@ -3,6 +3,8 @@ const home = require("./homeRoutes");
 const position = require("./positionRoutes");
 const team = require("./teamRoutes");
 const employee = require("./employeeRoutes");
+const user = require("./userRoutes");
+const post = require("./postRoutes");
 
 const routeList = [
   {
@@ -20,6 +22,14 @@ const routeList = [
   {
     path: "/employee",
     route: employee,
+  },
+  {
+    path: "/user",
+    route: user,
+  },
+  {
+    path: "/post",
+    route: post,
   },
 ];
 

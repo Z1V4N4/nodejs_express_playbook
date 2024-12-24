@@ -1,6 +1,6 @@
-const dbConf = require("../../configs/db.js");
-
+const dbConf = require("../../configs/postgres.js");
 const { Sequelize, DataTypes } = require("sequelize");
+
 const sequelize = new Sequelize(dbConf.db, dbConf.user, dbConf.password, {
   host: dbConf.host,
   dialect: dbConf.dialect,
@@ -44,4 +44,16 @@ db.team.hasMany(db.employee, {
   sourceKey: "team_code",
 });
 
-module.exports = db;
+//get connection
+const connectPostgres = async () => {
+  await db.sequelize
+    .sync({ force: false, alter: false })
+    .then(() => {
+      console.log("Postgres connected");
+    })
+    .catch((err) => {
+      console.log("Postgres connection error: " + err.message);
+    });
+};
+
+module.exports = { db, connectPostgres };

@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const routes = require("./routes");
+const postgres = require("./models/postgres");
+const mongoo = require("./models/mongoo");
 
 require("dotenv").config();
 
@@ -15,15 +17,8 @@ app.use(bodyParser.json());
 app.use(routes);
 
 //get connection
-const postgre = require("./models/postgres/index");
-postgre.sequelize
-  .sync({ force: false, alter: false })
-  .then(() => {
-    console.log("koneksi postgres ok");
-  })
-  .catch((err) => {
-    console.log("koneksi postgres gagal: " + err.message);
-  });
+postgres.connectPostgres();
+mongoo.connectMongoo();
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

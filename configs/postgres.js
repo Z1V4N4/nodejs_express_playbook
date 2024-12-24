@@ -5,12 +5,12 @@ module.exports = {
   user: process.env.USER_PG,
   password: process.env.PASSWORD_PG,
   db: process.env.DBNAME_PG,
-  dialect: process.env.DB_DIALECT,
+  dialect: process.env.DIALECT_PG,
   pool: {
     max: 20,
     min: 0,
     // acquire: 30000,
     idle: 10000,
   },
-  timezone: process.env.TZ_IND,
+  timezone: process.env.TZ,
 };
